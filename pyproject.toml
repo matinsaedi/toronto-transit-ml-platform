@@ -5,6 +5,12 @@ description = "An end-to-end ML platform for Toronto TTC delay prediction"
 requires-python = ">= 3.12"
 dependencies = [
 		"pandas",
-                "requests"
+                "requests",
+                "jupyter",
+                "scikit-learn",
+                "xgboost",
+                "joblib",
+                "fastapi",
+                "uvicorn"
 		]
 
