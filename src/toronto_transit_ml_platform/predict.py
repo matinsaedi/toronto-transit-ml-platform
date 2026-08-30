@@ -1,12 +1,15 @@
 from pathlib import Path
-
+import os
 import pandas as pd
 
 from toronto_transit_ml_platform.model_io import load_model
 
-
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-MODEL_PATH = PROJECT_ROOT / "artifacts/models/xgb_pipeline.joblib"
+MODEL_PATH = Path(
+                  os.getenv(
+                            "MODEL_PATH",
+                            "artifacts/models/xgb_pipeline.joblib",
+                  )
+)
 
 model = load_model(MODEL_PATH)
 

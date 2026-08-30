@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from toronto_transit_ml_platform.predict import predict_delay
 
 class PredictionRequest(BaseModel):
@@ -7,8 +7,8 @@ class PredictionRequest(BaseModel):
     line: str
     code: str
     bound: str
-    month: int
-    hour: int
+    month: int = Field(ge=1, le=12)
+    hour: int = Field(ge=0, le=23)
 
 app = FastAPI()
 
