@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ttc
+      POSTGRES_PASSWORD: ttc_dev
+      POSTGRES_DB: ttc_ml
+    ports:
+      - "5432:5432"
+    volumes:
+      - ttc-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ttc -d ttc_ml"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  ttc-postgres-data:
+    external: true

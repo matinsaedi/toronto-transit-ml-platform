@@ -1,8 +1,9 @@
+import os
 import psycopg
 
 def get_connection():
     return psycopg.connect(
-        host="localhost",
+        host=os.getenv("DB_HOST", "localhost"),
         port=5432,
         dbname="ttc_ml",
         user="ttc",
