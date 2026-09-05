@@ -49,3 +49,4 @@ def test_metrics():
 
     assert response.status_code == 200
     assert "prediction_requests_total" in response.text
+    assert "prediction_latency_seconds" in response.text

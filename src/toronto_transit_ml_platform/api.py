@@ -2,9 +2,10 @@ from fastapi import FastAPI, Response
 from pydantic import BaseModel, Field
 from contextlib import asynccontextmanager
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
+from time import perf_counter
 from toronto_transit_ml_platform.predict import predict_delay
 from toronto_transit_ml_platform.database import create_predictions_table, save_prediction
-from toronto_transit_ml_platform.monitoring import prediction_requests
+from toronto_transit_ml_platform.monitoring import prediction_requests, prediction_latency
 
 class PredictionRequest(BaseModel):
     day: str
@@ -28,6 +29,8 @@ def health():
 
 @app.post("/predict")
 def predict(request: PredictionRequest):
+    start_time = perf_counter()
+
     prediction = predict_delay(
 	request.day,
 	request.line,
@@ -48,6 +51,9 @@ def predict(request: PredictionRequest):
         )
 
     prediction_requests.inc()
+
+    elapsed_time = perf_counter() - start_time
+    prediction_latency.observe(elapsed_time)
 
     return {"predicted_delay_minutes": prediction}
 
