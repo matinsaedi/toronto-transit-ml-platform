@@ -9,7 +9,11 @@ def test_health():
     assert output.status_code == 200
     assert output.json() == {"status": "healthy"}
 
-def test_predict_valid():
+def test_predict_valid(monkeypatch):
+    monkeypatch.setattr(
+	"toronto_transit_ml_platform.api.save_prediction",
+	lambda *args, **kwargs: None,
+	)
     response = client.post(
         "/predict",
         json={
@@ -39,3 +43,9 @@ def test_predict_invalid_month():
     )
     
     assert response.status_code == 422
+
+def test_metrics():
+    response = client.get("/metrics")
+
+    assert response.status_code == 200
+    assert "prediction_requests_total" in response.text
