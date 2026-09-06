@@ -1,11 +1,11 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Request, Response
 from pydantic import BaseModel, Field
 from contextlib import asynccontextmanager
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 from time import perf_counter
 from toronto_transit_ml_platform.predict import predict_delay
 from toronto_transit_ml_platform.database import create_predictions_table, save_prediction
-from toronto_transit_ml_platform.monitoring import prediction_requests, prediction_latency
+from toronto_transit_ml_platform.monitoring import prediction_requests, prediction_latency, http_errors
 
 class PredictionRequest(BaseModel):
     day: str
@@ -63,3 +63,18 @@ def metrics():
 	content=generate_latest(),
 	media_type=CONTENT_TYPE_LATEST,
     )
+
+@app.middleware("http")
+async def monitor_errors(request: Request, call_next):
+    try:
+        response = await call_next(request)
+    except Exception:
+        http_errors.labels(status_code="500").inc()
+        raise
+
+    if response.status_code >= 400:
+        http_errors.labels(
+            status_code = str(response.status_code)
+        ).inc()
+
+    return response

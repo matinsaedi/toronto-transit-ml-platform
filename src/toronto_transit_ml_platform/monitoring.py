@@ -9,3 +9,9 @@ prediction_latency = Histogram(
 	"prediction_latency_seconds",
 	"Time spent processing prediction requests",
 )
+
+http_errors = Counter(
+	"http_errors_total",
+	"Total number of HTTP error responses",
+	["status_code"],
+)
