@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from functools import lru_cache
 import pandas as pd
 
 from toronto_transit_ml_platform.model_io import load_model
@@ -11,7 +12,9 @@ MODEL_PATH = Path(
                   )
 )
 
-model = load_model(MODEL_PATH)
+@lru_cache(maxsize=1)
+def get_model():
+    return load_model(MODEL_PATH)
 
 
 def predict_delay(
@@ -35,6 +38,6 @@ def predict_delay(
         ]
     )
 
-    prediction = model.predict(sample)
+    prediction = get_model().predict(sample)
 
     return float(prediction[0])

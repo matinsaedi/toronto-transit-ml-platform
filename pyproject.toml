@@ -22,3 +22,7 @@ dev = [
        "httpx",
       ]
 
+[tool.pytest.ini_options]
+markers = [
+    "requires_model: tests that require the saved model artifact",
+]

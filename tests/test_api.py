@@ -14,6 +14,11 @@ def test_predict_valid(monkeypatch):
 	"toronto_transit_ml_platform.api.save_prediction",
 	lambda *args, **kwargs: None,
 	)
+
+    monkeypatch.setattr(
+        "toronto_transit_ml_platform.api.predict_delay",
+        lambda *args, **kwargs: 12.5,
+        )
     response = client.post(
         "/predict",
         json={
@@ -27,7 +32,7 @@ def test_predict_valid(monkeypatch):
         )
 
     assert response.status_code == 200
-    assert "predicted_delay_minutes" in response.json()
+    assert response.json() == {"predicted_delay_minutes": 12.5}
 
 def test_predict_invalid_month():
     response = client.post(
