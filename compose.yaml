@@ -25,6 +25,17 @@ services:
       postgres:
         condition: service_healthy
 
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    depends_on:
+      - api
+
 volumes:
   ttc-postgres-data:
     external: true
+  prometheus-data:
