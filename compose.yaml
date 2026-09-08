@@ -21,6 +21,8 @@ services:
       - "8000:8000"
     environment:
       DB_HOST: postgres
+    volumes:
+      - ./artifacts/models:/app/artifacts/models:ro
     depends_on:
       postgres:
         condition: service_healthy

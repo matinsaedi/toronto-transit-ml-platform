@@ -7,9 +7,7 @@ COPY src/ ./src/
 
 RUN pip install --no-cache-dir .
 
-COPY artifacts/models/xgb_pipeline.joblib ./artifacts/models/xbg_pipeline.joblib
-
-ENV MODEL_PATH=/app/artifacts/models/xbg_pipeline.joblib
+ENV MODEL_PATH=/app/artifacts/models/xgb_pipeline.joblib
 
 EXPOSE 8000
 
