@@ -7,7 +7,7 @@ def get_connection():
         port=5432,
         dbname="ttc_ml",
         user="ttc",
-        password="ttc_dev",
+        password=os.getenv("DB_PASSWORD", "ttc_dev"),
     )
 
 
