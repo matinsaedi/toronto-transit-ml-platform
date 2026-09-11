@@ -403,8 +403,6 @@ Completed:
 - Automatic deployment to EC2 after successful CI
 - Post-deployment health checking
 
-Remaining work is primarily documentation, cleanup, and small reliability improvements.
-
 ## Motivation
 
 Most of my previous machine learning work has focused on model development, deep learning, computer vision, and research. I started this project to gain experience with the engineering required to turn a trained model into a complete deployed service.
