@@ -1,5 +1,7 @@
 # Toronto Transit ML Platform
 
+[![CI/CD](https://github.com/matinsaedi/toronto-transit-ml-platform/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/matinsaedi/toronto-transit-ml-platform/actions/workflows/ci.yml)
+
 An end-to-end machine learning service for predicting TTC bus delays.
 
 I built this project to gain hands-on experience with the engineering involved in taking a machine learning model from experimentation to a production-style service. The goal is not to develop a novel prediction model, but to work through the surrounding components commonly needed in a real-world ML system: training, inference, APIs, testing, containerization, persistence, monitoring, CI/CD, model artifact storage, and cloud deployment.
