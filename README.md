@@ -266,17 +266,6 @@ The production stack runs on an Ubuntu EC2 instance using:
 compose.prod.yaml
 ```
 
-Production configuration differs from local development in several ways:
-
-- PostgreSQL is not published on a host port.
-- FastAPI is bound to `127.0.0.1:8000`.
-- Prometheus is bound to `127.0.0.1:9090`.
-- PostgreSQL credentials are supplied through a private `.env.prod` file.
-- The trained model is mounted into the API container from the EC2 host.
-- PostgreSQL and Prometheus use persistent Docker volumes.
-
-The `.env.prod` file and model artifacts are excluded from Git.
-
 The model artifact is stored in a private S3 bucket and can be downloaded by the EC2 instance using its IAM role without storing AWS access keys on the server.
 
 ## CI/CD
