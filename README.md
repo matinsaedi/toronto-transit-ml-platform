@@ -8,6 +8,14 @@ I built this project to gain hands-on experience with the engineering involved i
 
 The project uses public TTC bus delay data from the City of Toronto.
 
+## System in Action
+
+### Prediction API
+
+![FastAPI prediction example](docs/images/api-demo.png)
+
+*Successful `POST /predict` request returning HTTP 200 and a predicted delay.*
+
 ## Architecture
 
 ```text
